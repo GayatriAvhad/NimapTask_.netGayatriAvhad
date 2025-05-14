@@ -1,0 +1,44 @@
+﻿@model IEnumerable<NimapInfotechTask.Models.Category>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Category List Here!!</h3>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary mt-5">Add New Categories</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Category_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category_Name)
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category_id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category_Name)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Category_id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Category_id }, new { @class = "btn btn-info" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Category_id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

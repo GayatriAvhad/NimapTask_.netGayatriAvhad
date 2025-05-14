@@ -1,0 +1,79 @@
+﻿@model NimapInfotechTask.Models.Pagination
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h3>Product List!!</h3>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Add New Product</a>
+</p>
+<form method="post" asp-action="Index">
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                ProductId
+            </th>
+            <th>
+                ProductName
+            </th>
+            <th>
+                Price
+            </th>
+            <th>
+               CategoryId
+            </th>
+            <th>
+               CategoryName
+            </th>
+            <th>
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+ @if (Model?.ProductList != null && Model.ProductList.Any())
+            {
+                foreach (var item in Model.ProductList)
+                {
+                    <tr>
+                        <td>@item.ProductId</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price</td>
+                        <td>@item.CategoryId</td>
+                        <td>@item.CategoryName</td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.ProductId }, new { @class = "btn btn-info" }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.ProductId }, new { @class = "btn btn-info" }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.ProductId }, new { @class = "btn btn-danger" })
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="6">No records found.</td></tr>
+            }
+
+    </tbody>
+</table>
+<ul class="pagination">
+        @for (int i = 1; i <= Model.PageCount; i++)
+        {
+            <li class="page-item @(i == Model.CurrentPageIndex ? "active" : "")">
+                <a class="page-link" href="javascript:pageClick(@i)">@i</a>
+            </li>
+        }
+    </ul>
+    <input type="hidden" id="hfCurrentPageIndex" name="currentPageIndex" />
+</form>
+@section Scripts {
+    <script>
+        function pageClick(index) {
+            document.getElementById("hfCurrentPageIndex").value = index;
+            document.forms[0].submit();
+        }
+    </script>
+}
